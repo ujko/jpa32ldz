@@ -1,0 +1,13 @@
+[main] ERROR paczkaTestowa.LogMain  - error
+[main] WARN  paczkaTestowa.LogMain  - warning
+[main] INFO  paczkaTestowa.LogMain  - info
+[main] DEBUG paczkaTestowa.LogMain  - debug
+[main] TRACE paczkaTestowa.LogMain  - trace
+[main] ERROR paczkaTestowa.LogMain  - error
+[main] WARN  paczkaTestowa.LogMain  - warning
+[main] ERROR paczkaTestowa.LogMain  - error
+[main] WARN  paczkaTestowa.LogMain  - warning
+[main] INFO  paczkaTestowa.LogMain  - info
+[main] ERROR paczkaTestowa.LogMain  - error
+[main] WARN  paczkaTestowa.LogMain  - warning
+[main] INFO  paczkaTestowa.LogMain  - info Employee{personId=0, firstName='null', lastName='null', email='test@email', birthDate=null}, jakis teks
