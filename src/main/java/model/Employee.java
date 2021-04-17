@@ -7,7 +7,12 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "employees")
+@NamedQueries({
+        @NamedQuery(name = "getAll", query = "select e from Employee e"),
+        @NamedQuery(name = "getByFirstName", query = "select e from Employee e where e.firstName = :firstName")
+})
 public class Employee implements Serializable {
+    public static final String GET_ALL = "getAll";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Id
     @Column(name = "employee_id")
