@@ -9,12 +9,13 @@ import java.time.format.DateTimeFormatter;
 @Table(name = "employees")
 @NamedQueries({
         @NamedQuery(name = "getAll", query = "select e from Employee e"),
-        @NamedQuery(name = "getByFirstName", query = "select e from Employee e where e.firstName = :firstName")
+        @NamedQuery(name = "getByFirstName", query = "select e from Employee e where lower(e.firstName) = :firstName")
 })
 public class Employee implements Serializable {
     public static final String GET_ALL = "getAll";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "employee_id")
     private int personId;
     @Column(name = "first_name")
