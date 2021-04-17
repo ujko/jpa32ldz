@@ -1,28 +1,42 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-/**
- * EmbeddedId
- */
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "employees")
 public class Employee implements Serializable {
-    @EmbeddedId
-    private EmployeeId employeeId;
-
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    @Id
+    @Column(name = "employee_id")
+    private int personId;
+    @Column(name = "first_name")
+    private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "email")
     private String email;
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @Transient
+    private String birthDateString;
+
+    public String getBirthDateString() {
+        if(birthDate != null) {
+            return birthDate.format(formatter);
+        }
+        return birthDateString;
+    }
+
+    public void setBirthDateString(String birthDateString) {
+        if(birthDateString != null && !"".equals(birthDateString.trim())) {
+            birthDate = LocalDate.parse(birthDateString, formatter);
+        }
+        this.birthDateString = birthDateString;
+    }
 
     public String getLastName() {
         return lastName;
@@ -48,18 +62,27 @@ public class Employee implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public EmployeeId getEmployeeId() {
-        return employeeId;
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setEmployeeId(EmployeeId employeeId) {
-        this.employeeId = employeeId;
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
-                "employeeId=" + employeeId +
+                "personId=" + personId +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
