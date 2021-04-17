@@ -1,9 +1,14 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
+@Embeddable
 public class EmployeeId implements Serializable {
+    @Column(name = "employee_id")
     private int employeeId;
+    @Column(name = "first_name")
     private String firstName;
 
     public EmployeeId(int employeeId, String firstName) {

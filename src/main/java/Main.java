@@ -2,11 +2,7 @@ import model.Employee;
 import model.EmployeeId;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-
-import java.time.LocalDate;
 
 public class Main {
 
@@ -33,7 +29,7 @@ public class Main {
 //        query1.getResultStream().forEach(System.out::println);
         Employee slaughter = session.find(Employee.class, new EmployeeId(7, "Farris"));
         System.out.println(slaughter);
-        System.out.println(slaughter.getEmployeeId());
+        System.out.println(slaughter.getEmployeeId().getEmployeeId());
         session.close();
         factory.close();
     }

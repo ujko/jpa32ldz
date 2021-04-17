@@ -1,22 +1,21 @@
 package model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * IdClass
+ * EmbeddedId
  */
 
 @Entity
 @Table(name = "employees")
-@IdClass(EmployeeId.class)
 public class Employee implements Serializable {
-    @Id
-    @Column(name = "employee_id")
-    private int employeeId;
-    @Column(name = "first_name")
-    private String firstName;
+    @EmbeddedId
+    private EmployeeId employeeId;
 
     @Column(name = "last_name")
     private String lastName;
@@ -24,22 +23,6 @@ public class Employee implements Serializable {
     private String email;
     @Column(name = "birth_date")
     private LocalDate birthDate;
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
 
     public String getLastName() {
         return lastName;
@@ -65,11 +48,18 @@ public class Employee implements Serializable {
         this.birthDate = birthDate;
     }
 
+    public EmployeeId getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(EmployeeId employeeId) {
+        this.employeeId = employeeId;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "employeeId=" + employeeId +
-                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
