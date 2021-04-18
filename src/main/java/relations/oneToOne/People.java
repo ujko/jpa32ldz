@@ -11,8 +11,8 @@ public class People {
     private int id;
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "id")
+    @OneToOne
+    @JoinColumn(name = "id")
     private Address address;
 
     public int getId() {

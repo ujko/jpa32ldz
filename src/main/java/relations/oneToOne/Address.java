@@ -16,6 +16,18 @@ public class Address {
     @Column(name = "number")
     private String number;
 
+    @OneToOne
+    @JoinColumn(name = "id")
+    private People people;
+
+    public People getPeople() {
+        return people;
+    }
+
+    public void setPeople(People people) {
+        this.people = people;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,6 +67,7 @@ public class Address {
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", number='" + number + '\'' +
+                ", people=" + (people != null ? people.getName() : "no name") +
                 '}';
     }
 }
