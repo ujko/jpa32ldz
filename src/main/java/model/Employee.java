@@ -1,23 +1,26 @@
 package model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 @Entity
-@Table(name = "employees")
+@Table(name="employees")
+//@IdClass(EmployeeId.class)
 @NamedQueries({
         @NamedQuery(name = "getAll", query = "select e from Employee e"),
-        @NamedQuery(name = "getByFirstName", query = "select e from Employee e where lower(e.firstName) = :firstName")
+        @NamedQuery(name = "getByFirstName", query = "select e from Employee e where LOWER(e.firstName) like :firstName"),
+        @NamedQuery(name = "getByLastName", query = "select e from Employee e where LOWER(e.lastName) like :lastName"),
+        @NamedQuery(name = "getByEmail", query = "select e from Employee e where LOWER(e.email) like :email"),
+        @NamedQuery(name = "getByBirthDateBetween", query = "select e from Employee e where birthDate between :from and :to")
 })
-public class Employee implements Serializable {
+public class Employee {
     public static final String GET_ALL = "getAll";
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "employee_id")
-    private int personId;
+    private int employeeId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -27,21 +30,29 @@ public class Employee implements Serializable {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @Transient
+    @Transient      // gdy nie ma takiej kolumny, a potrzebujemy
     private String birthDateString;
 
-    public String getBirthDateString() {
-        if(birthDate != null) {
-            return birthDate.format(formatter);
-        }
-        return birthDateString;
+    // do statycznych się nie czepia
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public Employee() {
     }
 
-    public void setBirthDateString(String birthDateString) {
-        if(birthDateString != null && !"".equals(birthDateString.trim())) {
-            birthDate = LocalDate.parse(birthDateString, formatter);
-        }
-        this.birthDateString = birthDateString;
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -68,30 +79,29 @@ public class Employee implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public int getPersonId() {
-        return personId;
+    public String getBirthDateString() {
+        if (birthDate != null) {
+            return birthDate.format(formatter);
+        }
+        return birthDateString;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setBirthDateString(String birthDateString) {
+        if (birthDateString != null && !"".equals(birthDateString.trim())) {
+            birthDate = LocalDate.parse(birthDateString, formatter);
+        }
+        this.birthDateString = birthDateString;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
-                "personId=" + personId +
+                "employeeId=" + employeeId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
+                ", birthDateString='" + getBirthDateString() + '\'' +
                 '}';
     }
 }
