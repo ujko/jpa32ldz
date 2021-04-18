@@ -1,10 +1,7 @@
-import model.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-
-import java.util.Arrays;
+import relations.oneTableTwoEntities.Employee;
 
 public class Main {
 
@@ -12,15 +9,10 @@ public class Main {
         System.out.println("Program działa");
         SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
         Session session = factory.openSession();
-        Arrays.stream(args).forEach(x -> showData(session, x));
+        Employee e = session.find(Employee.class, 4);
+        System.out.println(e);
         session.close();
         factory.close();
     }
 
-    private static void showData(Session session, String name) {
-        Query<Employee> employeeQuery = session
-                .createNamedQuery("getByFirstName", Employee.class)
-                .setParameter("firstName", name);
-        System.out.println(employeeQuery.getResultList());
-    }
 }

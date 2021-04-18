@@ -9,7 +9,7 @@
         <property name="hibernate.connection.password">example</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
-        <property name="hibernate.show_sql">false</property>
-        <mapping class="model.Employee"/>
+        <property name="hibernate.show_sql">true</property>
+        <mapping class="relations.oneTableTwoEntities.Employee"/>
     </session-factory>
 </hibernate-configuration>
