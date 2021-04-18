@@ -3,7 +3,6 @@ package model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
 @Entity
 @Table(name="employees")
@@ -13,8 +12,9 @@ import java.time.format.DateTimeFormatterBuilder;
         @NamedQuery(name = "getByFirstName", query = "select e from Employee e where LOWER(e.firstName) like :firstName"),
         @NamedQuery(name = "getByLastName", query = "select e from Employee e where LOWER(e.lastName) like :lastName"),
         @NamedQuery(name = "getByEmail", query = "select e from Employee e where LOWER(e.email) like :email"),
-        @NamedQuery(name = "getByBirthDateBetween", query = "select e from Employee e where birthDate between :from and :to")
+        @NamedQuery(name = "getByBirthDateBetween", query = "select e from Employee e where e.birthDate between :from and :to")
 })
+@NamedNativeQueries(@NamedNativeQuery(name = "runProcedure", query = "call procedure(:param1, :param2))"))
 public class Employee {
     public static final String GET_ALL = "getAll";
     @Id
